@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 module MultiScheduler
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   def self.schedule id, options = {}
     scheduler(id, options).start

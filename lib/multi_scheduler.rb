@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 module MultiScheduler
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
 
   def self.schedule id, options = {}
     host_os = RbConfig::CONFIG['host_os']

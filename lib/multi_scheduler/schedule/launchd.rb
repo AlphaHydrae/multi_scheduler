@@ -3,7 +3,7 @@ require 'fileutils'
 
 module MultiScheduler
 
-  class Launchd < Scheduler
+  class Launchd < Schedule
 
     def start
       stop

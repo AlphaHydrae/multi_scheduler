@@ -2,7 +2,7 @@
 
 module MultiScheduler
 
-  class Whenever < Scheduler
+  class Whenever < Schedule
 
     def start
       raise 'Not yet implemented on this operating system'

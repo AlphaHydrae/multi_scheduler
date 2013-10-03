@@ -4,33 +4,14 @@ module MultiScheduler
   VERSION = '0.1.1'
 
   def self.schedule id, options = {}
-    scheduler(id, options).start
-  end
-
-  def self.unschedule id, options = {}
-    scheduler(id, options).stop
-  end
-
-  def self.scheduler id, options = {}
-    case RbConfig::CONFIG['host_os']
+    host_os = RbConfig::CONFIG['host_os']
+    case host_os
     when /darwin/i
       Launchd.new id, options
-    else
+    when /linux/i
       Whenever.new id, options
-    end
-  end
-
-  private
-
-  class Scheduler
-    
-    def initialize id, options = {}
-
-      @identifier = id
-      raise "identifier is required" unless @identifier
-
-      @command_arguments = [ options[:args] ].flatten.compact
-      @command = options[:command] || @command_arguments.shift
+    else
+      raise "Unsupported host operating system '#{host_os}'"
     end
   end
 end

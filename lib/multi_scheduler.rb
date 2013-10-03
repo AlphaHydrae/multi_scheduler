@@ -3,33 +3,34 @@
 module MultiScheduler
   VERSION = '0.1.0'
 
-  def schedule options = {}
-    scheduler(options).start
+  def self.schedule id, options = {}
+    scheduler(id, options).start
   end
 
-  def unschedule id
-    scheduler({ identifier: id }).stop
+  def self.unschedule id, options = {}
+    scheduler(id, options).stop
   end
 
-  def scheduler options = {}
+  def self.scheduler id, options = {}
     case RbConfig::CONFIG['host_os']
     when /darwin/i
-      Launchd.new options
+      Launchd.new id, options
     else
-      Whenever.new options
+      Whenever.new id, options
     end
   end
 
+  private
+
   class Scheduler
     
-    def initialize options = {}
+    def initialize id, options = {}
 
-      @identifier = options[:id]
-      raise ":id is required" unless @identifier
+      @identifier = id
+      raise "identifier is required" unless @identifier
 
-      @command_arguments = options[:args] || []
+      @command_arguments = [ options[:args] ].flatten.compact
       @command = options[:command] || @command_arguments.shift
-      raise ":command is required" unless @command
     end
   end
 end
